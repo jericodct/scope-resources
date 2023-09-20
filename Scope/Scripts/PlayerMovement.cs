@@ -8,11 +8,14 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce = 10f;
     private bool isGrounded;
     private Rigidbody2D rb;
+    private SpriteRenderer spriteRenderer;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         // spriteRenderer = GetComponent<SpriteRenderer>(); // Get the sprite renderer component
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
     }
 
     void Update()
@@ -22,6 +25,11 @@ public class PlayerMovement : MonoBehaviour
         Vector2 movement = new Vector2(moveHorizontal * moveSpeed, rb.velocity.y);
         rb.velocity = movement;
 
+        if(moveHorizontal < 0){
+            spriteRenderer.flipX = true;
+        }else if(moveHorizontal > 0){
+            spriteRenderer.flipX = false;
+        }
 
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
